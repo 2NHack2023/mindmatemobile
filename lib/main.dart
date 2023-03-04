@@ -1,37 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:mindmatemobile/home_page.dart';
 import 'package:mindmatemobile/supabase_config.dart';
-import 'package:supabase/supabase.dart';
-
-import 'home_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'login_page.dart';
 import 'signup_page.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+Future<void> main() async {
+  await Supabase.initialize(
+    url: supabaseUrl,
+    anonKey: supabaseKey,
+  );
 
-  // Initialize Supabase client
-  runApp(MyApp(supabaseClient: supabaseClient));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  final SupabaseClient supabaseClient;
-
-  const MyApp({Key? key, required this.supabaseClient}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  late AuthChangeEvent _authChangeEvent;
-
   @override
   void initState() {
     super.initState();
-    _authChangeEvent =
-        widget.supabaseClient.auth.onAuthStateChange.listen((session) {
-      setState(() {});
-    }) as AuthChangeEvent;
   }
 
   @override
@@ -41,22 +34,18 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoggedIn = widget.supabaseClient.auth.currentSession != null;
-
     return MaterialApp(
       title: 'Supabase Login Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: isLoggedIn
-          ? const HomePage(
-              title: 'MindMate',
-            )
-          : const LoginPage(),
       routes: {
         '/login': (_) => const LoginPage(),
         '/signup': (_) => const SignUpPage(),
+        '/home': (_) => const HomePage(title: 'MindMate')
       },
+      initialRoute: '/login',
+      home: const LoginPage(),
     );
   }
 }

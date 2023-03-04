@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gotrue/src/types/auth_response.dart';
-import 'package:mindmatemobile/supabase_config.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -13,17 +12,23 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final SupabaseClient supabaseClient = Supabase.instance.client;
 
   Future<void> _signUp() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
-    late AuthResponse response;
     try {
-      response =
+      final response =
           await supabaseClient.auth.signUp(email: email, password: password);
-    } catch (error) {
-      showErrorSnackBar('Failed to register account');
+
+      debugPrint(response.toString());
+      if (response.user?.id == null) {
+        showErrorSnackBar('Eroare la inregistrare');
+      }
+    } catch (exc) {
+      showErrorSnackBar(exc.toString());
     }
+    Navigator.pushReplacementNamed(context, '/login');
   }
 
   void showErrorSnackBar(String message) {
@@ -51,21 +56,21 @@ class _SignUpPageState extends State<SignUpPage> {
             children: [
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Adresa email'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
+                    return 'Adresa email';
                   }
                   return null;
                 },
               ),
               TextFormField(
                 controller: _passwordController,
-                decoration: const InputDecoration(labelText: 'Password'),
+                decoration: const InputDecoration(labelText: 'Parola'),
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
+                    return 'Parola';
                   }
                   return null;
                 },
@@ -77,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     _signUp();
                   }
                 },
-                child: const Text('Sign up'),
+                child: const Text('Inregistrare'),
               ),
             ],
           ),

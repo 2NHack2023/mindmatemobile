@@ -81,6 +81,15 @@ class _DetailsPageState extends State<DetailsPage> {
               ]),
               Row(children: [const Text('Mancare: '), Text(_data!.food)]),
               Row(children: [const Text('Evenimente: '), Text(_data!.events)]),
+              Row(
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Inapoi'))
+                ],
+              )
             ],
           ),
         ),

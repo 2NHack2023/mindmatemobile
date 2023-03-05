@@ -45,7 +45,13 @@ class _DashboardState extends State<Dashboard> {
               id: record['id'] as int))
           .toList();
 
-      for (int i = 0; i <= 6; i++) {
+      var accountCreated = DateUtils.dateOnly(
+          DateTime.parse(_supabaseClient.auth.currentUser!.createdAt));
+      var diff = DateUtils.dateOnly(DateTime.now()).difference(accountCreated);
+
+      var size = diff.inDays < 6 ? diff.inDays : 6;
+
+      for (int i = 0; i <= size; i++) {
         var crtDate =
             DateUtils.dateOnly(DateTime.now().subtract(Duration(days: i)));
         var filled = false;

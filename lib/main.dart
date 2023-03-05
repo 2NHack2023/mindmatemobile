@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mindmatemobile/dashboard.dart';
+import 'package:mindmatemobile/day_details_page.dart';
 import 'package:mindmatemobile/mood_barometer.dart';
 import 'package:mindmatemobile/supabase_config.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -44,7 +45,8 @@ class _MyAppState extends State<MyApp> {
           '/login': (_) => const LoginPage(),
           '/signup': (_) => const SignUpPage(),
           '/home': (_) => const MoodBarometer(),
-          '/dashboard': (_) => Dashboard()
+          '/dashboard': (_) => Dashboard(),
+          '/details': (_) => DetailsPage(id: 2),
         },
         initialRoute: '/login',
         home: const LoginPage());

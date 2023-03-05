@@ -12,18 +12,28 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final SupabaseClient supabaseClient = Supabase.instance.client;
+  final SupabaseClient _supabaseClient = Supabase.instance.client;
 
   Future<void> _login() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
     late AuthResponse response;
     try {
-      response = await supabaseClient.auth
+      response = await _supabaseClient.auth
           .signInWithPassword(email: email, password: password);
 
       if (response.session != null) {
-        Navigator.pushReplacementNamed(context, '/home');
+        final response = await _supabaseClient
+            .from('moods')
+            .select('id')
+            .eq('user_id', _supabaseClient.auth.currentUser!.id.toString())
+            .gte('created_at', DateUtils.dateOnly(DateTime.now()))
+            .limit(1);
+        if (response != null && response.length > 0) {
+          Navigator.pushReplacementNamed(context, '/dashboard');
+        } else {
+          Navigator.pushReplacementNamed(context, '/home');
+        }
       }
     } catch (error) {
       showErrorSnackBar('Eroare la conectare');

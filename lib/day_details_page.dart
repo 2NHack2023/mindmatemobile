@@ -4,7 +4,10 @@ import 'package:mindmatemobile/model/dashboard/day_items/day_item_details.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DetailsPage extends StatefulWidget {
-  const DetailsPage({Key? key}) : super(key: key);
+  int id;
+  DetailsPage({Key? key, required this.id}) : super(key: key) {
+    this.id = id;
+  }
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -16,6 +19,7 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   void initState() {
     super.initState();
+    _fetchData(widget.id);
   }
 
   final SupabaseClient _supabaseClient = Supabase.instance.client;
@@ -45,8 +49,6 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    int id = ModalRoute.of(context)!.settings.arguments as int;
-    _fetchData(id);
     if (_data == null) {
       return const Loading();
     } else {

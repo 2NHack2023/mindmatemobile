@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mindmatemobile/day_details_page.dart';
 import 'package:mindmatemobile/loading.dart';
 import 'package:mindmatemobile/model/dashboard/chart/chart_day.dart';
 import 'package:mindmatemobile/model/dashboard/day_items/day_item.dart';
@@ -22,6 +23,7 @@ class _DashboardState extends State<Dashboard> {
   List<ChartDay> _dayRecords = List.empty();
 
   final List<DayItem> _listData = [];
+  bool _stateSet = false;
 
   Future<void> _fetchData() async {
     final response = await _supabaseClient
@@ -55,12 +57,13 @@ class _DashboardState extends State<Dashboard> {
         }
         _listData.add(DayItem(crtDate, filled, id));
       }
+      _stateSet = true;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_dayRecords.isEmpty || _listData.isEmpty) {
+    if (!_stateSet) {
       return const Loading();
     } else {
       return Scaffold(
@@ -116,8 +119,12 @@ class _DashboardState extends State<Dashboard> {
                           .toString()),
                   onTap: () {
                     if (item.filled) {
-                      Navigator.pushReplacementNamed(context, '/details',
-                          arguments: item.id);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsPage(id: item.id!),
+                        ),
+                      );
                     }
                   });
             },

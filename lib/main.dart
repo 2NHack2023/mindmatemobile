@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mindmatemobile/home_page.dart';
+import 'package:mindmatemobile/dashboard.dart';
+import 'package:mindmatemobile/mood_barometer.dart';
 import 'package:mindmatemobile/supabase_config.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'login_page.dart';
@@ -35,17 +36,17 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Supabase Login Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      routes: {
-        '/login': (_) => const LoginPage(),
-        '/signup': (_) => const SignUpPage(),
-        '/home': (_) => const HomePage(title: 'MindMate')
-      },
-      initialRoute: '/login',
-      home: const LoginPage(),
-    );
+        title: 'Supabase Login Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        routes: {
+          '/login': (_) => const LoginPage(),
+          '/signup': (_) => const SignUpPage(),
+          '/home': (_) => const MoodBarometer(),
+          '/dashboard': (_) => Dashboard()
+        },
+        initialRoute: '/login',
+        home: const LoginPage());
   }
 }

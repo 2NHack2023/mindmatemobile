@@ -21,12 +21,12 @@ class _LoginPageState extends State<LoginPage> {
     try {
       response = await supabaseClient.auth
           .signInWithPassword(email: email, password: password);
+
+      if (response.session != null) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
     } catch (error) {
       showErrorSnackBar('Eroare la conectare');
-    }
-
-    if (response.session != null) {
-      Navigator.pushReplacementNamed(context, '/home');
     }
   }
 

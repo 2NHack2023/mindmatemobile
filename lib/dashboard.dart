@@ -34,18 +34,17 @@ class _DashboardState extends State<Dashboard> {
     setState(() {
       _dayRecords = records
           .map((record) => ChartDay(
-                record['id'] as int,
-                DateUtils.dateOnly(
-                    DateTime.parse(record['created_at'] as String)),
-                record['mood'] as int,
-              ))
+              DateUtils.dateOnly(
+                  DateTime.parse(record['created_at'] as String)),
+              record['mood'] as int,
+              id: record['id'] as int))
           .toList();
 
       for (int i = 0; i <= 6; i++) {
         var crtDate =
             DateUtils.dateOnly(DateTime.now().subtract(Duration(days: i)));
         var filled = false;
-        var id = 0;
+        int? id;
         for (var record in _dayRecords) {
           if (record.day.isAtSameMomentAs(crtDate)) {
             filled = true;

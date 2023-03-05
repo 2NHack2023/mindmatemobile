@@ -1,7 +1,7 @@
 class ChartDay {
   final DateTime day;
   final int mood;
-  final int id;
+  final int? id;
 
-  ChartDay(this.id, this.day, this.mood);
+  ChartDay(this.day, this.mood, {this.id});
 }

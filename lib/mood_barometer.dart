@@ -67,7 +67,7 @@ class _MoodBarometerState extends State<MoodBarometer> {
         },
         steps: [
           Step(
-            title: Text('Care este starea ta?'),
+            title: const Text('Care este starea ta?'),
             content: Slider(
               value: _mood.toDouble(),
               min: -3,

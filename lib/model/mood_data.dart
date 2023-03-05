@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class MoodData {
   String userId;
   int mood;

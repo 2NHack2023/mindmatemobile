@@ -25,7 +25,7 @@ class _DashboardState extends State<Dashboard> {
   Future<void> _fetchData() async {
     final response = await _supabaseClient
         .from('moods')
-        .select('created_at, mood')
+        .select('id, created_at, mood')
         .eq('user_id', _supabaseClient.auth.currentUser!.id.toString())
         .gte('created_at',
             DateUtils.dateOnly(DateTime.now().subtract(Duration(days: 7))))
@@ -34,6 +34,7 @@ class _DashboardState extends State<Dashboard> {
     setState(() {
       _dayRecords = records
           .map((record) => ChartDay(
+                record['id'] as int,
                 DateUtils.dateOnly(
                     DateTime.parse(record['created_at'] as String)),
                 record['mood'] as int,
@@ -44,13 +45,15 @@ class _DashboardState extends State<Dashboard> {
         var crtDate =
             DateUtils.dateOnly(DateTime.now().subtract(Duration(days: i)));
         var filled = false;
+        var id = 0;
         for (var record in _dayRecords) {
           if (record.day.isAtSameMomentAs(crtDate)) {
             filled = true;
+            id = record.id;
             break;
           }
         }
-        _listData.add(DayItem(crtDate, filled));
+        _listData.add(DayItem(crtDate, filled, id));
       }
     });
   }
@@ -87,8 +90,10 @@ class _DashboardState extends State<Dashboard> {
                     DateTime(item.date.year, item.date.month, item.date.day)
                         .toString()),
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, '/details',
-                      arguments: 2);
+                  if (item.filled) {
+                    Navigator.pushReplacementNamed(context, '/details',
+                        arguments: item.id);
+                  }
                 });
           },
         ))

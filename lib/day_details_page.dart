@@ -3,68 +3,88 @@ import 'package:mindmatemobile/model/dashboard/day_items/day_item_details.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DetailsPage extends StatefulWidget {
-  final int id;
-
-  const DetailsPage({Key? key, required this.id}) : super(key: key);
+  const DetailsPage({Key? key}) : super(key: key);
 
   @override
-  _DetailsPageState createState() => _DetailsPageState();
+  State<DetailsPage> createState() => _DetailsPageState();
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  var data = DayItemDetails(
-      id: 'id',
-      createdAt: DateTime.now(),
-      userId: 'userId',
-      mood: 0,
-      sleep: 0,
-      alcohol: false,
-      exercise: false,
-      food: 'food',
-      events: 'events');
+  DayItemDetails? _data;
 
   @override
   void initState() {
     super.initState();
-    fetchData();
   }
 
   final SupabaseClient _supabaseClient = Supabase.instance.client;
 
-  Future<void> fetchData() async {}
+  Future<void> _fetchData(int id) async {
+    final result = await _supabaseClient
+        .from('moods')
+        .select()
+        .eq('id', id)
+        .limit(1)
+        .single();
+
+    setState(() {
+      _data = DayItemDetails(
+          id: (result['id'] as int).toString(),
+          createdAt: DateUtils.dateOnly(
+              DateTime.parse(result['created_at'] as String)),
+          userId: result['user_id'] as String,
+          mood: result['mood'] as int,
+          sleep: result['sleep'] as int,
+          alcohol: result['alcohol'] as bool,
+          exercise: result['exercise'] as bool,
+          food: result['food'] as String,
+          events: result['events'] as String);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (data == null) {
+    int id = ModalRoute.of(context)!.settings.arguments as int;
+    _fetchData(id);
+    if (_data == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Loading...'),
+          title: const Text('Loading...'),
         ),
-        body: Center(
+        body: const Center(
           child: CircularProgressIndicator(),
         ),
       );
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text(data!.createdAt.toString()),
+          title: Text(_data!.createdAt.toString()),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [const Text('Scor: '), Text(data.mood.toString())]),
+              Row(children: [
+                const Text('Scor: '),
+                Text(_data!.mood.toString())
+              ]),
               Row(
                 children: [
                   const Text('Somn: '),
-                  Text(data.sleep.toString()),
+                  Text(_data!.sleep.toString()),
                 ],
               ),
-              Row(children: [Text('Alcool: '), Text(data.alcohol.toString())]),
-              Row(children: [Text('Sport: '), Text(data.exercise.toString())]),
-              Row(children: [Text('Mancare: '), Text(data.food)]),
-              Row(children: [Text('Evenimente: '), Text(data.events)]),
+              Row(children: [
+                const Text('Alcool: '),
+                Text(_data!.alcohol.toString())
+              ]),
+              Row(children: [
+                const Text('Sport: '),
+                Text(_data!.exercise.toString())
+              ]),
+              Row(children: [const Text('Mancare: '), Text(_data!.food)]),
+              Row(children: [const Text('Evenimente: '), Text(_data!.events)]),
             ],
           ),
         ),

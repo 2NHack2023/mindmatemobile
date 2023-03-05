@@ -115,20 +115,23 @@ class _DashboardState extends State<Dashboard> {
             itemCount: _listData.length,
             itemBuilder: (BuildContext context, int index) {
               final item = _listData[index];
-              return ListTile(
-                  title: Text(
-                      DateTime(item.date.year, item.date.month, item.date.day)
-                          .toString()),
-                  onTap: () {
-                    if (item.filled) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailsPage(id: item.id!),
-                        ),
-                      );
-                    }
-                  });
+              return Container(
+                color: !item.filled ? Colors.red : Colors.white,
+                child: ListTile(
+                    title: Text(
+                        DateTime(item.date.year, item.date.month, item.date.day)
+                            .toString()),
+                    onTap: () {
+                      if (item.filled) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailsPage(id: item.id!),
+                          ),
+                        );
+                      }
+                    }),
+              );
             },
           ))
         ]),

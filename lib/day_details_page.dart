@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mindmatemobile/loading.dart';
 import 'package:mindmatemobile/model/dashboard/day_items/day_item_details.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -47,14 +48,7 @@ class _DetailsPageState extends State<DetailsPage> {
     int id = ModalRoute.of(context)!.settings.arguments as int;
     _fetchData(id);
     if (_data == null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Loading...'),
-        ),
-        body: const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+      return const Loading();
     } else {
       return Scaffold(
         appBar: AppBar(

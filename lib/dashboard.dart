@@ -16,7 +16,9 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   final SupabaseClient _supabaseClient = Supabase.instance.client;
 
-  _DashboardState() {
+  @override
+  void initState() {
+    super.initState();
     _fetchData();
   }
 

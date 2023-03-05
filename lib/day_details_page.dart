@@ -56,41 +56,83 @@ class _DetailsPageState extends State<DetailsPage> {
         appBar: AppBar(
           title: Text(_data!.createdAt.toString()),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: [
-                const Text('Scor: '),
-                Text(_data!.mood.toString())
-              ]),
-              Row(
-                children: [
-                  const Text('Somn: '),
-                  Text(_data!.sleep.toString()),
-                ],
+        body: Center(
+          child: SizedBox(
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Card(
+                        child: Row(children: [
+                          const Text('Scor: '),
+                          Text(_data!.mood.toString())
+                        ]),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Card(
+                        child: Row(
+                          children: [
+                            const Text('Somn: '),
+                            Text(_data!.sleep.toString()),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Card(
+                        child: Row(children: [
+                          const Text('Alcool: '),
+                          Text(_data!.alcohol.toString())
+                        ]),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Card(
+                        child: Row(children: [
+                          const Text('Sport: '),
+                          Text(_data!.exercise.toString())
+                        ]),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Card(
+                        child: Row(children: [
+                          const Text('Mancare: '),
+                          Text(_data!.food)
+                        ]),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Card(
+                        child: Row(children: [
+                          const Text('Evenimente: '),
+                          Text(_data!.events)
+                        ]),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Inapoi'))
+                      ],
+                    )
+                  ],
+                ),
               ),
-              Row(children: [
-                const Text('Alcool: '),
-                Text(_data!.alcohol.toString())
-              ]),
-              Row(children: [
-                const Text('Sport: '),
-                Text(_data!.exercise.toString())
-              ]),
-              Row(children: [const Text('Mancare: '), Text(_data!.food)]),
-              Row(children: [const Text('Evenimente: '), Text(_data!.events)]),
-              Row(
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Inapoi'))
-                ],
-              )
-            ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(

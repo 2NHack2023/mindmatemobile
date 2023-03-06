@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mindmatemobile/dashboard.dart';
-import 'package:mindmatemobile/day_details_page.dart';
 import 'package:mindmatemobile/mood_barometer.dart';
 import 'package:mindmatemobile/supabase_config.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

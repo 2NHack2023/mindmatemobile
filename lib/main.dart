@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
           '/login': (_) => const LoginPage(),
           '/signup': (_) => const SignUpPage(),
           '/home': (_) => const MoodBarometer(),
-          '/dashboard': (_) => Dashboard(),
+          '/dashboard': (_) => const Dashboard(),
         },
         initialRoute: '/login',
         home: const LoginPage());

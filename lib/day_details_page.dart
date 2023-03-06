@@ -4,10 +4,8 @@ import 'package:mindmatemobile/model/dashboard/day_items/day_item_details.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DetailsPage extends StatefulWidget {
-  int id;
-  DetailsPage({Key? key, required this.id}) : super(key: key) {
-    this.id = id;
-  }
+  final int id;
+  const DetailsPage({Key? key, required this.id}) : super(key: key);
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -52,9 +50,11 @@ class _DetailsPageState extends State<DetailsPage> {
     if (_data == null) {
       return const Loading();
     } else {
+      var dateSelected = _data!.createdAt;
       return Scaffold(
         appBar: AppBar(
-          title: Text(_data!.createdAt.toString()),
+          title: Text(
+              "${dateSelected.year}-${dateSelected.month.toString().padLeft(2, '0')}-${dateSelected.day.toString().padLeft(2, '0')}"),
         ),
         body: Center(
           child: SizedBox(

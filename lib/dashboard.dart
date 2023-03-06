@@ -32,8 +32,10 @@ class _DashboardState extends State<Dashboard> {
         .from('moods')
         .select('id, created_at, mood')
         .eq('user_id', _supabaseClient.auth.currentUser!.id.toString())
-        .gte('created_at',
-            DateUtils.dateOnly(DateTime.now().subtract(Duration(days: 7))))
+        .gte(
+            'created_at',
+            DateUtils.dateOnly(
+                DateTime.now().subtract(const Duration(days: 7))))
         .order('created_at', ascending: true);
     final records = response as List<dynamic>;
     setState(() {
@@ -76,7 +78,7 @@ class _DashboardState extends State<Dashboard> {
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Dashboard'),
+          title: const Text('Dashboard'),
         ),
         body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           SizedBox(

@@ -40,15 +40,15 @@ jobs:
       if: matrix.os == 'macos-latest'
       run: flutter build ios --release --no-codesign
 
-    - name: Archive and export iOS app
-      if: matrix.os == 'macos-latest'
-      uses: devbotsxyz/apple-sign@v1
-      with:
-        app_path: build/ios/archive/Runner.xcarchive
-        export_path: build/ios/ipa
-        export_options_plist_path: Runner/exportOptions.plist
-        apple_id: ${{ secrets.APPLE_ID }}
-        apple_id_password: ${{ secrets.APPLE_ID_PASSWORD }}
+    # - name: Archive and export iOS app
+    #   if: matrix.os == 'macos-latest'
+    #   uses: devbotsxyz/apple-sign@v1
+    #   with:
+    #     app_path: build/ios/archive/Runner.xcarchive
+    #     export_path: build/ios/ipa
+    #     export_options_plist_path: Runner/exportOptions.plist
+    #     apple_id: ${{ secrets.APPLE_ID }}
+    #     apple_id_password: ${{ secrets.APPLE_ID_PASSWORD }}
 
     - name: Build web app
       if: matrix.os == 'ubuntu-latest'
@@ -76,4 +76,4 @@ jobs:
           build/macos/Build/Products/Release/runner.app
           build/windows/runner/Release/*
           build/linux/x64/*
-          build/ios/ipa/*.ipa
+          # build/ios/ipa/*.ipa

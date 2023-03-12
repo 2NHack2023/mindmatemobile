@@ -27,8 +27,9 @@ class _SignUpPageState extends State<SignUpPage> {
       }
     } catch (exc) {
       showErrorSnackBar(exc.toString());
+    } finally {
+      await Navigator.pushReplacementNamed(context, '/login');
     }
-    Navigator.pushReplacementNamed(context, '/login');
   }
 
   void showErrorSnackBar(String message) {

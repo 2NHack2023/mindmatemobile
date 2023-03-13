@@ -30,7 +30,7 @@ jobs:
       run: flutter pub get
 
     - name: Analyze and format code
-      run: flutter analyze && flutter format --set-exit-if-changed
+      run: flutter analyze && dart format --set-exit-if-changed
 
     - name: Build APK
       if: matrix.os == 'ubuntu-latest'

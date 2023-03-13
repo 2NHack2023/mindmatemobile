@@ -65,6 +65,7 @@ jobs:
     - name: Install Checkout
       uses: actions/checkout@v2
     - name: Install Ninja
+      if: matrix.os == 'ubuntu-latest'
       run: sudo apt-get update && sudo apt-get install ninja-build
 
     - name: Build Linux app

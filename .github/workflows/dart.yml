@@ -62,6 +62,15 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: flutter build windows --release
 
+    - name: Install Ninja
+      uses: actions/checkout@v2
+    - name: Install Ninja
+      run: sudo apt-get update && sudo apt-get install ninja-build
+    - name: Configure build
+      run: cmake -B build -GNinja
+    - name: Build
+      run: cmake --build build
+
     - name: Build Linux app
       if: matrix.os == 'ubuntu-latest'
       run: flutter build linux --release

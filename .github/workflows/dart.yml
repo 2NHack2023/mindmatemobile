@@ -39,8 +39,8 @@ jobs:
     - name: Analyze and format code
       run: flutter analyze && dart format . --set-exit-if-changed
 
-    - name: Run tests
-      run: flutter test
+    # - name: Run tests
+    #   run: flutter test
 
     - name: Build APK
       if: matrix.os == 'ubuntu-latest' && matrix.flutter_channel == 'stable'

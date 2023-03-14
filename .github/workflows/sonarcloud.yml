@@ -51,7 +51,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }} 
+          SONAR_ORG_KEY: ${{ secrets.SONAR_ORG_KEY }} # Generate a token on Sonarcloud.io, add it to the secrets of this repo with the name SONAR_TOKEN (Settings > Secrets > Actions > add new repository secret)
         with:
           # Additional arguments for the sonarcloud scanner
-          organization: ${{ secrets.SONAR_ORG_KEY }}
-          project: ${{ secrets.SONAR_PROJECT_KEY }}
+          args: >
+            -Dsonar.organization=$SONAR_ORG_KEY
+            -Dsonar.projectKey=$SONAR_PROJECT_KEY
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.sources=lib/
+            -Dsonar.test.exclusions=tests/**
+            -Dsonar.tests=tests/
+            -Dsonar.verbose=true

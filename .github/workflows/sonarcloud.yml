@@ -60,6 +60,6 @@ jobs:
             -Dsonar.projectKey=$SONAR_PROJECT_KEY
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.sources=lib/
-            -Dsonar.test.exclusions=tests/**
+            -Dsonar.test.exclusions=test/**
             -Dsonar.tests=test/
             -Dsonar.verbose=true

@@ -30,14 +30,18 @@ class _LoginPageState extends State<LoginPage> {
             .gte('created_at', DateUtils.dateOnly(DateTime.now()))
             .limit(1);
         if (response != null && response.length > 0) {
-          Navigator.pushReplacementNamed(context, '/dashboard');
+          _navigateTo('/dashboard');
         } else {
-          Navigator.pushReplacementNamed(context, '/home');
+          _navigateTo('/home');
         }
       }
     } catch (error) {
       showErrorSnackBar('Eroare la conectare');
     }
+  }
+
+  Future<void> _navigateTo(String routeName) async {
+    Navigator.pushReplacementNamed(context, routeName);
   }
 
   void showErrorSnackBar(String message) {
@@ -95,9 +99,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/signup');
-                },
+                onPressed: () => _navigateTo('/signup'),
                 child: const Text('Inregistrare'),
               ),
             ],

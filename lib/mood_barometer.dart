@@ -28,9 +28,7 @@ class _MoodBarometerState extends State<MoodBarometer> {
         exercise: _exercise,
         food: _food,
         events: _events);
-
-    final List<Map<String, dynamic>> data =
-        await _supabaseClient.from('moods').insert(moodData.toJson()).select();
+    await _supabaseClient.from('moods').insert(moodData.toJson());
   }
 
   @override

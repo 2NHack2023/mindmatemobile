@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mindmatemobile/dashboard.dart';
-import 'package:mindmatemobile/day_details_page.dart';
 import 'package:mindmatemobile/mood_barometer.dart';
 import 'package:mindmatemobile/supabase_config.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -13,14 +12,14 @@ Future<void> main() async {
     anonKey: supabaseKey,
   );
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -45,7 +44,7 @@ class _MyAppState extends State<MyApp> {
           '/login': (_) => const LoginPage(),
           '/signup': (_) => const SignUpPage(),
           '/home': (_) => const MoodBarometer(),
-          '/dashboard': (_) => Dashboard(),
+          '/dashboard': (_) => const Dashboard(),
         },
         initialRoute: '/login',
         home: const LoginPage());
